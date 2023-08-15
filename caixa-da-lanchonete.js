@@ -17,20 +17,35 @@ class CaixaDaLanchonete {
         if (!itens || itens.length === 0) {
             return "Não há itens no carrinho de compra!";
         }
+
+        let valorTotal = 0;
         
         // Cria uma lista com os códigos dos itens principais
         const itensPrincipais = itens.map(item => item.split(",")[0]);
 
         // Loop para processar cada item no carrinho
         for (const item of itens) {
-            const [codigo] = item.split(",");
+            const [codigo, quantidade] = item.split(",");
+            const produto = this.produtos[codigo];
 
+            // Verifica se o produto é válido
+             if (!produto) {
+                return "Item inválido!";
+            }
+
+            // Verifica se um item extra está sendo pedido sem o principal
             if ((codigo === "chantily" && !itensPrincipais.includes("cafe")) ||
                 (codigo === "queijo" && !itensPrincipais.includes("sanduiche"))) {
                 return "Item extra não pode ser pedido sem o principal";
             }
-
+            
+            // Calcula o valor total do pedido
+            valorTotal += produto.preco * parseInt(quantidade);
         }
+
+        // Formata e retorna o valor total
+        const valorFormatado = `R$ ${valorTotal.toFixed(2).replace(".", ",")}`;
+        return valorFormatado;
     }
 }
 export { CaixaDaLanchonete };
