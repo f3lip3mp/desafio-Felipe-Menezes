@@ -12,7 +12,11 @@ class CaixaDaLanchonete {
             // Adicione outros produtos aqui
         };
     }
+    calcularValorDaCompra(formaDePagamento, itens) {
+        if (!itens || itens.length === 0) {
+            return "Não há itens no carrinho de compra!";
+        }
 
+    }
 }
-
 export { CaixaDaLanchonete };
