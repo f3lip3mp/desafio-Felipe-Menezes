@@ -13,10 +13,24 @@ class CaixaDaLanchonete {
         };
     }
     calcularValorDaCompra(formaDePagamento, itens) {
+        // Verifica se há itens no carrinho
         if (!itens || itens.length === 0) {
             return "Não há itens no carrinho de compra!";
         }
+        
+        // Cria uma lista com os códigos dos itens principais
+        const itensPrincipais = itens.map(item => item.split(",")[0]);
 
+        // Loop para processar cada item no carrinho
+        for (const item of itens) {
+            const [codigo] = item.split(",");
+
+            if ((codigo === "chantily" && !itensPrincipais.includes("cafe")) ||
+                (codigo === "queijo" && !itensPrincipais.includes("sanduiche"))) {
+                return "Item extra não pode ser pedido sem o principal";
+            }
+
+        }
     }
 }
 export { CaixaDaLanchonete };
