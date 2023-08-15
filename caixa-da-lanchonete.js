@@ -43,6 +43,20 @@ class CaixaDaLanchonete {
             valorTotal += produto.preco * parseInt(quantidade);
         }
 
+        if (valorTotal === 0) {
+            return "Quantidade inválida!";
+        }
+
+        // Aplica desconto/acréscimo de acordo com a forma de pagamento
+        if (formaDePagamento === "dinheiro") {
+            valorTotal *= 0.95; //Aplica 5% de desconto
+        } else if (formaDePagamento === "credito") {
+            valorTotal *= 1.03; //Aplica 3% de acréscimo
+        } else if (formaDePagamento === "debito") {
+        } else {
+            return "Forma de pagamento inválida!";
+        }
+
         // Formata e retorna o valor total
         const valorFormatado = `R$ ${valorTotal.toFixed(2).replace(".", ",")}`;
         return valorFormatado;
